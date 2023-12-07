@@ -1,0 +1,97 @@
+<app-admin style="position: sticky; top: 0; z-index: 100;"></app-admin>
+
+<body>
+    <!-- Popup Messages -->
+    <div class="popup-container" *ngIf="successmessage">
+        <span class="alert alert-success" role="alert">
+          <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+        </span>
+    </div>
+    <div class="popup-container" *ngIf="errormessage">
+        <span class="alert alert-danger" role="alert"  (click)="errpopup()">
+          <i class="bi bi-x-square-fill" ></i>      {{errormessage}}
+        </span>
+  </div>
+  <!-- Show Service Centers -->
+    <div *ngIf="servicesarr.length==0" class="alert">
+        NO service found
+    </div>
+    <div class="cards" *ngIf="servicesarr.length>0" id="adminProfileView">
+        <div *ngFor="let ser of servicesarr" class="card">
+            <img [src]="ser.serviceCenterImageUrl" alt="Grid Image" class="card_img">
+            <div class="plus"><p>+</p></div>
+            <div class="line"></div>
+            <div>
+                <h3>{{ser.serviceCenterName}}</h3>
+                <p><b>PhoneNo:</b> {{ser.serviceCenterPhone}}</p>
+                <p><b>Mail:</b> {{ser.serviceCenteramailId}}</p>                          
+                <button type="button" class="btn btn-primary" (click)="updateform(ser)" id="editCenter" data-bs-toggle="modal" data-bs-target="#editservice"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-primary"(click)="ondelete(ser.serviceCenterID)" id="deleteCenter"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    </div>     
+</body>
+<!-- Modal Forms to Edit the Serivce Center -->
+<div class="modal fade" id="editservice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Edit Service Center Details</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editCenter">
+                    <label>Enter Service Center Name </label>
+                    <input class="form-control" formControlName="serviceCenterName" type="text" placeholder="Enter the Service Center Name" id="addName" 
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenterName'].touched && (editCenter.hasError('required','serviceCenterName')||editCenter.hasError('pattern','serviceCenterName'))}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenterName'].touched && editCenter.controls['serviceCenterName'].valid}" >
+                    <small *ngIf="editCenter.controls['serviceCenterName'].touched && editCenter.hasError('pattern','serviceCenterName')">Only Alphabets Allowed </small>
+                    <small *ngIf="editCenter.controls['serviceCenterName'].touched && editCenter.hasError('required','serviceCenterName')">Center name is required</small><br>
+          
+                    <label>Enter Service Center Phone Number</label>
+                    <input class="form-control" formControlName="serviceCenterPhone" type="tel" placeholder="Enter the Service Center Phone Number" id="addNumber"
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenterPhone'].touched && (editCenter.hasError('required','serviceCenterPhone')||editCenter.hasError('pattern','serviceCenterName'))}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenterPhone'].touched && editCenter.controls['serviceCenterPhone'].valid}" >
+                    <small *ngIf="editCenter.controls['serviceCenterPhone'].touched && editCenter.hasError('pattern','serviceCenterPhone')">Invalid Phone Number (10 digits Only) </small>
+                    <small *ngIf="editCenter.controls['serviceCenterPhone'].touched && editCenter.hasError('required','serviceCenterPhone')">Phone Number is required</small><br>
+          
+                    <label>Enter Service Center Address</label>
+                    <textarea class="form-control" formControlName="serviceCenterAddress" placeholder="Enter the Service Center Address" id="addAddress"
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenterAddress'].touched && (editCenter.hasError('required','serviceCenterAddress')||editCenter.hasError('pattern','serviceCenterName'))}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenterAddress'].touched && editCenter.controls['serviceCenterAddress'].valid}" ></textarea>
+                    <small *ngIf="editCenter.controls['serviceCenterAddress'].touched && editCenter.hasError('pattern','serviceCenterAddress')">Invalid Address</small>
+                    <small *ngIf="editCenter.controls['serviceCenterAddress'].touched && editCenter.hasError('required','serviceCenterAddress')">Center address is required</small><br>
+          
+                    <label>Enter Service Center Image URL</label>
+                    <input class="form-control" formControlName="serviceCenterImageUrl" type="url" placeholder="Enter the Service Center Image URL" id="addImageUrl" 
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenterImageUrl'].touched && editCenter.hasError('required','serviceCenterImageUrl')}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenterImageUrl'].touched && editCenter.controls['serviceCenterImageUrl'].valid}" >
+                    <small *ngIf="editCenter.controls['serviceCenterImageUrl'].touched && editCenter.hasError('required','serviceCenterImageUrl')">Image URL is required</small><br>
+          
+                    <label>Enter Service Center Mail Id</label>
+                    <input class="form-control" formControlName="serviceCenteramailId" type="email" placeholder="Enter the Service Center Mail" id="addEmail" 
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenteramailId'].touched && (editCenter.hasError('required','serviceCenteramailId')||editCenter.hasError('pattern','serviceCenterName'))}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenteramailId'].touched && editCenter.controls['serviceCenteramailId'].valid}" >
+                    <small *ngIf="editCenter.controls['serviceCenteramailId'].touched && editCenter.hasError('pattern','serviceCenteramailId')">Invalid Email </small>
+                    <small *ngIf="editCenter.controls['serviceCenteramailId'].touched && editCenter.hasError('required','serviceCenteramailId')">Email is required</small><br>
+          
+                    <label>Enter Service Center Description</label>
+                    <textarea class="form-control" formControlName="serviceCenterDescription" placeholder="Enter Service Center Description" id="addCentreDescripition"
+                    [ngClass]="{'is-invalid': editCenter.controls['serviceCenterDescription'].touched && (editCenter.hasError('required','serviceCenterDescription')||editCenter.hasError('pattern','serviceCenterName'))}" 
+                    [ngClass]="{'is-valid': editCenter.controls['serviceCenterDescription'].touched && editCenter.controls['serviceCenterDescription'].valid}" ></textarea>
+                    <small *ngIf="editCenter.controls['serviceCenterDescription'].touched && editCenter.hasError('pattern','serviceCenterDescription')">No Special Characters Allowed</small>
+                    <small *ngIf="editCenter.controls['serviceCenterDescription'].touched && editCenter.hasError('required','serviceCenterDescription')">Center Description is required</small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"id="closemodal">Close</button>
+                <button type="button" class="btn btn-primary"  (click)="onedit();showFieldErrors()" id="updateButton">
+                    <span *ngIf="EditserviceButtonText === 'edit'">Save changes</span>
+        <span *ngIf="EditserviceButtonText !== 'edit'">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </span>
+                </button>                
+            </div>
+        </div>
+    </div>
+</div>

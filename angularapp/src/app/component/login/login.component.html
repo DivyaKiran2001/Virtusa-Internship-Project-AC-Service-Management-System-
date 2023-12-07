@@ -1,0 +1,67 @@
+
+<div class="popup-container" *ngIf="errormessage">
+  <span class="alert alert-danger" role="alert">
+    <i class="bi bi-x-square-fill"></i> {{errormessage}}
+  </span>
+</div>
+<div class="popup-container" *ngIf="successmessage">
+  <span class="alert alert-success" role="alert">
+    <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+  </span>
+</div>
+
+<body>
+  
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row">
+        <div class="col-md-6 side-image">
+          <!-------Image-------->
+          <img
+            src="https://img.freepik.com/free-vector/air-conditioning-refrigeration-services-abstract-concept-illustration-installation-repair-maintenance-air-conditioners-climate-control-systems-equipment_335657-704.jpg?size=626&ext=jpg"
+            alt="">
+          <div class="text">
+            <p>COOLING KING AC Service Appointment System <br> Please login...</p>
+            
+            
+          </div>
+        </div>
+        <!-- Login Form -->
+        <div class="col-md-6 right">
+          <div class="input-box">
+            <header>Login</header>
+            <form [formGroup]="LoginForm">
+
+              <div class="input-field">
+                <input type="email" class="input" id="email" required autocomplete="off" formControlName="Email" />
+                <small class="text-danger" *ngIf="LoginForm.controls['Email'].touched && LoginForm.hasError('pattern','Email')">Invalid email</small>
+                <small class="text-danger" *ngIf="LoginForm.controls['Email'].touched && LoginForm.hasError('required','Email')">Email is required</small>
+                <label for="email">Email</label>
+              </div>
+
+              <div class="input-field">
+                <input type="{{ showPassword ? 'text' : 'password' }}" class="input" id="password" required formControlName="Password" />
+                <i class="bi bi-eye-slash-fill eye-icon" *ngIf="!showPassword" (click)="togglePasswordVisibility()" ></i>
+                <i class="bi bi-eye-fill eye-icon" *ngIf="showPassword" (click)="togglePasswordVisibility()" ></i>
+                <small class="text-danger" *ngIf="LoginForm.controls['Password'].touched && LoginForm.hasError('required','Password')">Password is required</small>
+                <label for="password">Password</label>
+              </div>
+
+            </form>
+            <div class="input-field">
+              <button (click)="onlogin()" id="loginButton" type="submit" class="submit">
+                <span *ngIf="loginButtonText === 'login'">Login</span>
+                <span *ngIf="loginButtonText !== 'login'">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </span>
+              </button>
+            </div>
+            <div class="signin">
+              <span>Don't have an account?<a routerLink="/signup"> Sign up</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

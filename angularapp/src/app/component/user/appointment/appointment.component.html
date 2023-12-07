@@ -1,0 +1,205 @@
+<app-user style="position: sticky; top: 0; z-index: 100;"></app-user>
+
+<body>
+  <!-- Popup Messages -->
+  <div class="popup-container" *ngIf="successmessage">
+    <span class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+    </span>
+  </div>
+  <div class="popup-container" *ngIf="errormessage">
+    <span class="alert alert-danger" role="alert">
+      <i class="bi bi-x-square-fill" ></i>      {{errormessage}}
+    </span>
+  </div>
+  <!-- Bookings -->
+  <div class="bgcolor" id="myBookingBody">
+    <div class="container">
+      <br>
+      <div class="alert" *ngIf="AppointmentArr.length===0">
+        <h1>NO BOOKING</h1>
+      </div>
+      <div id="tableDescription" class="visually-hidden">
+        This table displays the list of appointments.
+      </div>
+      <table class="table table-striped" *ngIf="AppointmentArr.length>0" aria-describedby="tableDescription">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>NAME</th>
+            <th>DATE</th>
+            <th>TIMING</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let app of AppointmentArr ;let i=index">
+            <td>{{ i + 1 }}</td>
+            <td id="centerName{{i+1}}" style="text-transform: capitalize;" >{{app.serviceCenterName}}</td>
+            <td>{{app.product.date}}</td>
+            <td>{{app.product.time}}</td>
+            <!-- Buttons to do Operations -->
+            <td>
+              <div *ngIf="isserviceover(app.product.date)!='same'">
+              <div *ngIf="!isserviceover(app.product.date)">
+                
+                <button type="submit" class="btn btn-primary"  (click)="fillappointment(app.product)" id="editBooking" data-bs-toggle="modal" data-bs-target="#editmodal">
+                  <i class="bi-pencil-square"></i>
+                </button>
+                <button type="submit" class="btn btn-primary"(click)="deleteappointment(app.product.id)" id="deleteBooking">
+                  <i class="bi-trash"></i>
+                </button>
+              
+              </div>
+              <div *ngIf="isserviceover(app.product.date)">
+                <button type="submit" (click)="DownloadInvoice(app.product.id, app.product.userEmailId, app.product.serviceCenterId, i)" id="{{app.product.id}}">
+                  <span *ngIf="loadingStates[i] !=='loading...' "><i class="bi bi-download"></i></span>
+                  <span *ngIf="loadingStates[i] === 'loading...'">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  </span>
+                </button>
+  
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#submitmodel" (click)="serviceimg(app.product.serviceCenterId)">
+                  <i class="bi-layout-text-sidebar-reverse"></i>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="isserviceover(app.product.date)=='same'">
+              <button type="submit" class="btn btn-primary" [disabled]="true">
+                <i class="bi-pencil-square"></i>
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="true">
+                <i class="bi-trash"></i>
+              </button>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- ALERT MESSAGES -->
+    <div class="alert">
+      You cannot edit or cancel the appointment on the day of service.<br>
+      The bill is available only on the day after the service is completed.
+    </div>
+
+<!-- MODAL FORM FOR EDIT APPOINTMENT -->
+    <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Appointment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="EditAppointment">
+
+              <label><h5>Enter Name of AC</h5></label>
+                <input class="form-control" style="margin: 10px; width: 90%;" type="text" placeholder="Enter the name of the AC" id="enterProductName" formControlName="productName"
+                 [ngClass]="{'is-invalid': EditAppointment.controls['productName'].touched && (EditAppointment.hasError('required','productName')||EditAppointment.hasError('pattern','productName'))}" 
+                 [ngClass]="{'is-valid': EditAppointment.controls['productName'].touched &&EditAppointment.controls['productModelNo'].valid }">
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['productName'].touched && EditAppointment.hasError('required','productName')">Product name is required</small>
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['productName'].touched && EditAppointment.hasError('pattern','productName')">Invalid Product Name</small>
+          
+              <br><label><h5>Enter the Model number of AC</h5></label>
+                <input type="text"  class="form-control" style="margin: 10px; width: 90%;" placeholder="Enter the Model number of the AC" id="enterModelNo" formControlName="productModelNo"
+                [ngClass]="{'is-invalid': EditAppointment.controls['productModelNo'].touched && (EditAppointment.hasError('required','productModelNo')||EditAppointment.hasError('pattern','productModelNo'))}"
+                [ngClass]="{'is-valid': EditAppointment.controls['productModelNo'].touched &&EditAppointment.controls['productModelNo'].valid }">
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['productModelNo'].touched && EditAppointment.hasError('pattern','productModelNo')">Invalid Model Number</small>
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['productModelNo'].touched && EditAppointment.hasError('required','productModelNo')">Model Number is required</small>
+
+              <br><label> <h5>Enter Date of Purchase of AC</h5> </label>
+                <input type="date"  class="form-control" style="margin: 10px; width: 90%;" placeholder="Enter the Date of Purchase" id="enterDateOfPurchase" formControlName="dateOfPurchase" (change)="onDateSelected()" [max]="tdy"
+                [ngClass]="{'is-invalid': EditAppointment.controls['dateOfPurchase'].touched && EditAppointment.hasError('required','dateOfPurchase')}"
+                [ngClass]="{'is-valid': EditAppointment.controls['dateOfPurchase'].touched &&EditAppointment.controls['dateOfPurchase'].valid }">
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['dateOfPurchase'].touched && EditAppointment.hasError('required','dateOfPurchase')">Product Date Of Purchase is required</small>
+              
+              <br><label> <h5>Enter the Contact Number:</h5> </label>
+                <input type="tel" class="form-control" style="margin: 10px; width: 90%;" placeholder="Enter the Contact Number" id="enterContactNumber" formControlName="contactNumber"
+                [ngClass]="{'is-invalid': EditAppointment.controls['contactNumber'].touched && (EditAppointment.hasError('required','contactNumber')||EditAppointment.hasError('pattern','contactNumber'))}"
+                [ngClass]="{'is-valid': EditAppointment.controls['contactNumber'].touched &&EditAppointment.controls['contactNumber'].valid }">
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['contactNumber'].touched && EditAppointment.hasError('required','contactNumber')">Contact Number is required</small>
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['contactNumber'].touched && EditAppointment.hasError('pattern','contactNumber')">Invalid  Contact Number (10 digits only)</small>
+              
+              <br><label><h5>Enter Problem Description of AC:</h5> </label>
+              <textarea class="form-control" style="margin: 10px; width: 90%;" placeholder="Enter Problem of the AC" id="enterProblem" formControlName="problemDescription"
+              [ngClass]="{'is-invalid': EditAppointment.controls['problemDescription'].touched && (EditAppointment.hasError('required','problemDescription')||EditAppointment.hasError('pattern','problemDescription'))}"
+              [ngClass]="{'is-valid': EditAppointment.controls['problemDescription'].touched &&EditAppointment.controls['problemDescription'].valid }"></textarea>
+              <span class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['problemDescription'].touched && EditAppointment.hasError('required','problemDescription')">Problem Description is required</span>
+              <span class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['problemDescription'].touched && EditAppointment.hasError('pattern','problemDescription')">Only Alphabets allowed</span>
+
+
+              <br><label> <h5>Book the Slots</h5> </label>
+              <div class="slots">
+                <select id="selectDate"class="form-control" style="margin: 10px; width: 90%;" formControlName="date" placeholder="Choose the DATE"
+                [ngClass]="{'is-valid': EditAppointment.controls['date'].touched &&EditAppointment.controls['date'].valid }"
+                [ngClass]="{'is-invalid': EditAppointment.controls['date'].touched && (EditAppointment.hasError('required','date')||EditAppointment.hasError('pattern','date'))}">
+                  <option value="" disabled selected>Select a date</option>
+                  <ng-container *ngFor="let slot of availableSlots">
+                    <option [value]="slot.date">{{ slot.date }}</option>
+                  </ng-container>
+                </select>
+                <small class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['date'].touched && EditAppointment.hasError('required', 'date')"> Date is required</small>
+
+                <select id="selectTime" class="form-control" style="margin: 10px; width: 90%;" formControlName="time" placeholder="Choose the time slot"
+                [ngClass]="{'is-valid': EditAppointment.controls['time'].touched &&EditAppointment.controls['time'].valid }"
+                [ngClass]="{'is-invalid': EditAppointment.controls['time'].touched && (EditAppointment.hasError('required','time')||EditAppointment.hasError('pattern','time'))}">
+                  <option value="" disabled selected>Select a time</option>
+                  <ng-container *ngFor="let slot of availableSlots">
+                    <ng-container *ngIf="slot.date === EditAppointment.value.date">
+                      <option *ngFor="let timeSlot of slot.times" [value]="timeSlot.time"
+                        [disabled]="timeSlot.isBooked">
+                        {{ timeSlot.time }}
+                      </option>
+                    </ng-container>
+                  </ng-container>
+                </select>
+                <p class="text-danger" style="margin: 10px;"*ngIf="EditAppointment.controls['time'].touched && EditAppointment.controls['time'].hasError('required')">  Time is required </p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"id="closemodal">Close</button>
+            <button type="button" class="btn btn-primary"  (click)="Update();showFieldErrors()" id="updateBooking">
+              <span *ngIf="book === 'book'">UPDATE APPOINTMENT</span>
+                <span *ngIf="book !== 'book'">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- MODAL FORM FOR POST REVIEW -->
+    <div class="modal fade" id="submitmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">CUSTOMER FEEDBACK</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h1>{{centerName}}</h1>
+            <img src="{{imageurl}}" width="450" height="350" alt="centernameimage">
+            <br>
+            <form [formGroup]="review">
+              <textarea placeholder="Hey! How was the service..." id="Review" formControlName="review"></textarea>
+              <small *ngIf="review.controls['review'].dirty && EditAppointment.hasError('required','review')">review is required</small>
+              <label>Rating:</label>
+              <div class="rating">
+                <span class="star" *ngFor="let star of getStarsArray()" [ngClass]="{ 'filled': star <= rating }" (click)="rate(star)">
+                  <i class="bi bi-star-fill"></i>
+                </span>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closemodal1"data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary"  (click)="reviews()" id="submitreview">submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

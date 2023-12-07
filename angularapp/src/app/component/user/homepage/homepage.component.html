@@ -1,0 +1,39 @@
+<app-user style="position: sticky; top: 0; z-index: 100;"></app-user>
+<body>
+  
+  <div class="viewport">
+    <!-- SHOW AVAILABLE SERVICE CENTER -->
+    <div class="title">
+      <h1> Welcome to Cooling King AC Service Management System</h1>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="form-inline">
+          <div class="input-group-lg">
+            <input type="text" name="search" [(ngModel)]="search" placeholder="search" class="form-control">
+            &nbsp;&nbsp;&nbsp;
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="servicesarr.length==0" class="alert alert-info">
+      NO service found
+    </div>
+    <div>
+      <div class="cards" *ngIf="servicesarr.length>0">
+        <div class="card" *ngFor="let ser of servicesarr |filter:search; let i=index" routerLink="/user/dashboard"
+          (click)="getServiceCenter(ser.serviceCenterID)">
+          <img class="card_img" [src]="ser.serviceCenterImageUrl" alt="Grid Image">
+          <div class="plus">
+            <p>+</p>
+          </div>
+          <h3>{{ ser.serviceCenterName }}</h3>
+          <div class="line"></div>
+          <p>Rating : {{ getStarRating(getAverageRating(ser.serviceCenteramailId)) }}</p>
+          <p>Address : {{ ser.serviceCenterAddress }}</p>
+          <p>Description : {{ ser.serviceCenterDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

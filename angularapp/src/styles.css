@@ -1,0 +1,216 @@
+
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+
+*{
+  margin: 0px;
+}
+
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.card p{
+  font-family: "Lato", Arial, sans-serif;
+  margin:0px;
+  color: black;
+  font-weight: 400;
+  font-size:15px;
+  line-height:130%;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-top:1%;
+  padding-bottom:5%;
+  border-radius:20px;
+  cursor:pointer;
+  transition: ease 1s;
+  -webkit-transition: ease 1s;
+  text-align: justify;
+}
+
+.card h3{
+  font-family: "Lato", Arial, sans-serif;
+  margin:0px;
+  color: black;
+  font-weight: 400;
+  font-size:20px;
+  line-height:90%;
+  padding-left: 8%;
+  padding-top:8%;
+  padding-bottom:3%;
+  border-radius:20px;
+  cursor:pointer;
+  transition: ease 1s;
+  -webkit-transition: ease 1s;
+}
+
+h1{
+  font-family: "Lato", Arial, sans-serif;
+  color:black;
+  font-weight: 400;
+  font-size:35px;
+  line-height:90%;
+  padding-bottom:100px;
+  padding-top:100px;
+  position:relative;
+  text-align:center;
+  
+}
+
+.title{
+  width:78%;
+  margin:auto;
+  padding-left:0px;
+  padding-bottom:0px;
+}
+
+.cards{
+  width:80%;
+  position:relative;
+  margin-left:auto;
+  margin-right:auto;
+  padding-bottom:200px;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+}
+
+.card{
+  width:22%;
+  position:relative;
+  background-color:white;
+  margin:1.13%;
+  border-radius:5px;
+  transition: 1s;
+  -webkit-transition:0.5s;
+  cursor:pointer;
+    flex: 1 1 auto;
+}
+
+.card:hover{
+  transform: scale(1.05);
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+}
+
+@media screen and (max-width: 1200px){
+  .card{
+  width:30%;
+  margin:1.6%;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .card{
+  width:45%;
+  margin:2.5%;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .card{
+  width:98%;
+  margin:2%;
+  }
+}
+
+.card_img{
+  width:100%;
+  height:150px;
+  position:reltive;
+  border-radius: 5px 5px 0px 0px;
+  background-size: cover;
+  background-position:center center; 
+  background-color: #20e6b3;
+  transition:1s;
+  -webkit-transition:1s;
+}
+
+
+.line{
+  height:2px;
+  width:84%;
+  margin:auto;
+  background-color: #8e11f3;
+}
+
+.title input{
+  background: transparent;
+  border:1px solid white;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:20px;
+  display:inline;
+  font-family: "Lato", Arial, sans-serif;
+  color: white;
+  font-size:18px;
+  line-height:90%;
+  border-radius:30px;
+  width:150px;
+  float:right;
+  margin-top:30px;
+}
+
+.title textarea:focus, input:focus{
+    outline: none;
+}
+
+
+.plus{
+  width:20px;
+  height:20px;
+  background: transparent;
+  border-radius: 50%;
+  position: absolute;
+  border: 2px solid white;
+  top:10px;
+  right:10px;
+  transition: 1s;
+  -webkit-transition: 1s;
+}
+
+.plus:hover{
+  transform: scale(1.1) rotate(90deg);
+}
+
+.plus p{
+  padding: 0px !important;
+  display:inline;
+  margin:0px;
+  line-height:50%;
+  left:50%;
+  top:45.3%;
+  transform:translate(-50%,-50%);
+  position:absolute;
+  color: white;
+}
+
+.zoomed{
+  width:100%;
+}
+.popup-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  z-index: 9999; 
+}
+  @import '~bootstrap/dist/css/bootstrap.css';
+  /* @import "~bootstrap-icons/font/bootstrap-icons.css"; */
+

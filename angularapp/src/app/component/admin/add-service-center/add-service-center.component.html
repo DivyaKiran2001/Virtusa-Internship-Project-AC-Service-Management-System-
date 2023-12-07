@@ -1,0 +1,73 @@
+<app-admin style="position: sticky; top: 0; z-index: 100;"></app-admin>
+<div class="popup-container" *ngIf="successmessage">
+  <span class="alert alert-success" role="alert">
+    <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+  </span>
+</div>
+<div class="popup-container" *ngIf="errormessage">
+  <span class="alert alert-danger" role="alert"  (click)="errpopup()">
+    <i class="bi bi-x-square-fill" ></i>      {{errormessage}}
+  </span>
+</div>
+<body>
+  <div class="cards" style="margin-top: 5%;">
+    <div class="card">
+        <h2 style="text-align: center;color: darkblue; margin-top: 10px;">ADD SERVICE CENTER</h2><br>
+        <div class="line" style="margin-bottom: 15px;"></div>
+<!-- ADD SERVICE CENTER FORM -->
+        <form [formGroup]="addCenter">
+
+          <label>Enter Service Center Name </label>
+          <input class="form-control" formControlName="serviceCenterName" type="text" placeholder="Enter the Service Center Name" id="addName" 
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenterName'].touched && (addCenter.hasError('required','serviceCenterName')||addCenter.hasError('pattern','serviceCenterName'))}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenterName'].touched && addCenter.controls['serviceCenterName'].valid}" >
+          <small *ngIf="addCenter.controls['serviceCenterName'].touched && addCenter.hasError('pattern','serviceCenterName')">Only Alphabets Allowed </small>
+          <small *ngIf="addCenter.controls['serviceCenterName'].touched && addCenter.hasError('required','serviceCenterName')">Center name is required</small><br>
+
+          <label>Enter Service Center Phone Number</label>
+          <input class="form-control" formControlName="serviceCenterPhone" type="tel" placeholder="Enter the Service Center Phone Number" id="addNumber"
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenterPhone'].touched && (addCenter.hasError('required','serviceCenterPhone')||addCenter.hasError('pattern','serviceCenterName'))}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenterPhone'].touched && addCenter.controls['serviceCenterPhone'].valid}" >
+          <small *ngIf="addCenter.controls['serviceCenterPhone'].touched && addCenter.hasError('pattern','serviceCenterPhone')">Invalid Phone Number (10 digits Only) </small>
+          <small *ngIf="addCenter.controls['serviceCenterPhone'].touched && addCenter.hasError('required','serviceCenterPhone')">Phone Number is required</small><br>
+
+          <label>Enter Service Center Address</label>
+          <textarea class="form-control" formControlName="serviceCenterAddress" placeholder="Enter the Service Center Address" id="addAddress"
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenterAddress'].touched && (addCenter.hasError('required','serviceCenterAddress')||addCenter.hasError('pattern','serviceCenterName'))}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenterAddress'].touched && addCenter.controls['serviceCenterAddress'].valid}" ></textarea>
+          <small *ngIf="addCenter.controls['serviceCenterAddress'].touched && addCenter.hasError('pattern','serviceCenterAddress')">Invalid Address</small>
+          <small *ngIf="addCenter.controls['serviceCenterAddress'].touched && addCenter.hasError('required','serviceCenterAddress')">Center address is required</small><br>
+
+          <label>Enter Service Center Image URL</label>
+          <input class="form-control" formControlName="serviceCenterImageUrl" type="url" placeholder="Enter the Service Center Image URL" id="addImageUrl" 
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenterImageUrl'].touched && addCenter.hasError('required','serviceCenterImageUrl')}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenterImageUrl'].touched && addCenter.controls['serviceCenterImageUrl'].valid}" >
+          <small *ngIf="addCenter.controls['serviceCenterImageUrl'].touched && addCenter.hasError('required','serviceCenterImageUrl')">Image URL is required</small><br>
+
+          <label>Enter Service Center Mail Id</label>
+          <input class="form-control" formControlName="serviceCenteramailId" type="email" placeholder="Enter the Service Center Mail" id="addEmail" 
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenteramailId'].touched && (addCenter.hasError('required','serviceCenteramailId')||addCenter.hasError('pattern','serviceCenterName'))}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenteramailId'].touched && addCenter.controls['serviceCenteramailId'].valid}" >
+          <small *ngIf="addCenter.controls['serviceCenteramailId'].touched && addCenter.hasError('pattern','serviceCenteramailId')">Invalid Email </small>
+          <small *ngIf="addCenter.controls['serviceCenteramailId'].touched && addCenter.hasError('required','serviceCenteramailId')">Email is required</small><br>
+
+          <label>Enter Service Center Description</label>
+          <textarea class="form-control" formControlName="serviceCenterDescription" placeholder="Enter Service Center Description" id="addCentreDescripition"
+          [ngClass]="{'is-invalid': addCenter.controls['serviceCenterDescription'].touched && (addCenter.hasError('required','serviceCenterDescription')||addCenter.hasError('pattern','serviceCenterName'))}" 
+          [ngClass]="{'is-valid': addCenter.controls['serviceCenterDescription'].touched && addCenter.controls['serviceCenterDescription'].valid}" ></textarea>
+          <small *ngIf="addCenter.controls['serviceCenterDescription'].touched && addCenter.hasError('pattern','serviceCenterDescription')">No Special Characters Allowed</small>
+          <small *ngIf="addCenter.controls['serviceCenterDescription'].touched && addCenter.hasError('required','serviceCenterDescription')">Center Description is required</small>
+
+          <button (click)="onadd();showFieldErrors()" class="btn btn-primary" type="submit" id="addButton" style="align-content: center;">
+            <span *ngIf="AddserviceButtonText === 'add'">ADD SERVICE</span>
+            <span *ngIf="AddserviceButtonText !== 'add'">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </span>
+          </button>
+        </form>
+    </div>        
+  </div>
+</body>
+  
+  
+  

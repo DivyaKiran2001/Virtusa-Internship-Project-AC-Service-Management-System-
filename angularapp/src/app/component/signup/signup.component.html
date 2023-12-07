@@ -1,0 +1,91 @@
+<div class="popup-container" *ngIf="errormessage">
+  <span class="alert alert-danger" role="alert">
+    <i class="bi bi-x-square-fill"></i> {{errormessage}}
+  </span>
+</div>
+<div class="popup-container" *ngIf="successmessage">
+  <span class="alert alert-success" role="alert">
+    <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+  </span>
+</div>
+<body>
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row">
+        <div class="col-md-6 side-image">
+          <img
+            src="https://img.freepik.com/free-vector/air-conditioning-refrigeration-services-abstract-concept-illustration-installation-repair-maintenance-air-conditioners-climate-control-systems-equipment_335657-704.jpg?size=626&ext=jpg"
+            alt="">
+          <div class="text">
+            <p >COOLING KING AC Service Appointment System <br>Please Signup... </p>
+          </div>
+        </div>
+        <!-- Sign UP Form -->
+        <div class="col-md-6 right">
+          <div class="input-box">
+            <header>Sign Up</header>
+            <form [formGroup]="SignupForm">
+
+              <div class="input-field">
+                <select formControlName="UserRole" id="userRole" class="input" required>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <small class="text-danger" *ngIf="SignupForm.controls['UserRole'].touched && SignupForm.hasError('required','UserRole')">User role is required</small>
+                <label for="userRole">Select User Role (Admin/User):</label>
+              </div>
+
+              <div class="input-field">
+                <input type="text" class="input" id="email" required autocomplete="off" formControlName="Email" />
+                <small class="text-danger" *ngIf="SignupForm.controls['Email'].touched && SignupForm.hasError('pattern','Email')">Invalid email</small>
+                <small class="text-danger" *ngIf="SignupForm.controls['Email'].touched && SignupForm.hasError('required','Email')">Email is required</small>
+                <label for="email">Email</label>
+              </div>
+
+              <div class="input-field">
+                <input formControlName="UserName" type="text" class="input" id="UserName" required />
+                <small class="text-danger" *ngIf="SignupForm.controls['UserName'].touched && SignupForm.hasError('required','UserName')">Username is required</small>
+                <small class="text-danger"  *ngIf="SignupForm.controls['UserName'].touched && SignupForm.hasError('pattern','UserName')">Invalid  name</small>
+                <label for="username">User Name</label>
+              </div>
+
+              <div class="input-field">
+                <input formControlName="MobileNumber" type="tel" class="input" id="MobileNumber" required />
+                <small class="text-danger" *ngIf="SignupForm.controls['MobileNumber'].touched && SignupForm.hasError('required','MobileNumber')">Mobile number is required</small>
+                <small class="text-danger" *ngIf="SignupForm.controls['MobileNumber'].touched && SignupForm.hasError('pattern','MobileNumber')">Invalid mobile number (10 digits only)</small>
+                <label for="mobilenumber">Mobile Number</label>
+              </div>
+
+              <div class="input-field">
+                <input formControlName="Password" type="{{ pwd ? 'text' : 'password' }}"class="input" id="password" required />
+                <small class="text-danger"  *ngIf="SignupForm.controls['Password'].touched && SignupForm.hasError('required','Password')">Password is required</small>
+                <small class="text-danger"  *ngIf="SignupForm.controls['Password'].touched && SignupForm.hasError('pattern','Password')">The password must be at least 8 characters long and include at least one special character, one uppercase letter, and one lowercase letter.</small>
+                <label for="password">Password</label>
+              </div>
+              
+              <div class="input-field">
+                <input formControlName="confirmpassword" type="{{ cpwd ? 'text' : 'password' }}" class="input" id="confirmPassword" required />
+                <small class="text-danger" *ngIf="SignupForm.controls['confirmpassword'].touched && SignupForm.get('confirmpassword')?.hasError('passwordMismatch')">Password  Does Not Match</small>
+                <label for="confirmpassword">Confirm Password</label>
+                
+              </div>
+
+            </form>
+
+            <div class="input-field">
+              <button (click)="onsignup()" id="loginButton" type="submit" class="submit">
+                <span *ngIf="signupButtonText === 'signup'">Signup</span>
+                <span *ngIf="signupButtonText !== 'signup'">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </span>
+              </button>
+            </div>
+            <div class="signin">
+              <span>Already registered? <a routerLink="/login" id="signinLink">Login</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

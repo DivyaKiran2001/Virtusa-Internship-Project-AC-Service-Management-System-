@@ -1,0 +1,15 @@
+<!-- To Show the Review -->
+<div class="carousel">
+    <div class="carouse1"*ngIf="carouselItems.length==0">
+      NO REVIEW AVAILABLE
+    </div>
+    <div *ngIf="carouselItems.length>0">
+      <div class="carousel-item" *ngFor="let item of carouselItems; let i = index"
+        [ngClass]="{'active': i === currentIndex}">
+        <p>{{ getAverageRating(item.review.rating) }}</p>
+        <h3>{{ item.user }}</h3>
+        <p>{{ item.review.review }}</p>
+      </div>
+    </div>
+  </div>
+  

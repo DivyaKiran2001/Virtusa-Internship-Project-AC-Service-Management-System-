@@ -1,0 +1,58 @@
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light p-3 " style="background-color: darkblue;">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/user/homepage">Cooling King</a>
+       <button class="navbar-toggler" type="button" style="background-color: azure;color: darkblue;"data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/user/homepage" id="homepage">Homepage</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/user/dashboard"id="Dashboard">Dashboard </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/user/appointment" id="appointment">My bookings</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown"[ngClass]="{'disabled': isNavbarTogglerActive}">
+            <div class="dropdown">
+              <div (click)="toggleDropdown()" class="dropbtn">
+                <i class="bi bi-person-fill"></i> {{userarr && userarr.length > 0 ? userarr[0].userName : 'UserName'}} 
+              </div>
+              <div id="myDropdown" [ngClass]="{'dropdown-content': true, 'show': isDropdownOpen}">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQSwlI2jh42geitbgpoByIXfaR_2J9Dl3XJQ&usqp=CAU"
+                  width="100" height="100" alt="">
+                <h3 style="text-align: center;">{{userarr && userarr.length > 0 ? userarr[0].userName : 'UserName'}}
+                </h3>
+                <hr>
+                <h6>Email ID:{{userarr && userarr.length > 0 ? userarr[0].email : 'xyz@gmail.com'}}</h6>
+                <h6>Mobile Number:{{userarr && userarr.length > 0 ? userarr[0].mobileNumber : 'MobileNumber'}}</h6>
+
+                
+                  <a style="width: 90% ;margin: 10px;" class="btn btn-secondary" (click)="logout()" routerLink="/login"><i
+                      class="bi bi-box-arrow-left"></i></a>
+                
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</body>
+
+<div class="popup-container" *ngIf="successmessage">
+  <span class="alert alert-success" role="alert">
+    <i class="bi bi-check-circle-fill"></i>      {{successmessage}}
+  </span>
+</div>
+<div class="popup-container" *ngIf="errormessage">
+  <span class="alert alert-danger" role="alert">
+    <i class="bi bi-x-square-fill" ></i>      {{errormessage}}
+  </span>
+</div>

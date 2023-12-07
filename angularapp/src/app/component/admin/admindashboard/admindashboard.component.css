@@ -1,0 +1,98 @@
+a{
+    color: white;
+    font-size: 1.5rem;
+
+}
+
+a:hover{
+    color:white;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 2.0rem;
+    margin-right: 8rem;
+  
+  }
+p{
+    font-size:large;
+    text-align: justify;
+}
+/* Styling the container class */
+body{
+  
+  background-image: url('https://wallpaperaccess.com/full/7233921.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+    background-color:white;
+  }
+  .container {
+    max-width: 1200px; /* Adjust this value to set the maximum width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding to create space between content and container edges */
+  }
+  
+  /* Styling the text-center class */
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Styling the text-primary class */
+  .text-primary {
+    color: blue; /* Change the text color to blue or any other preferred color */
+  }
+  
+  /* Styling the buttons */
+  .btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Styling the primary button */
+  .btn-primary {
+    background-color: blue; /* Change the background color to blue or any other preferred color */
+    color: white; /* Change the text color to white or any other preferred color */
+  }
+  
+  /* Styling the secondary button */
+  .btn-secondary {
+    background-color: gray; /* Change the background color to gray or any other preferred color */
+    color: white; /* Change the text color to white or any other preferred color */
+  }
+  
+  /* Styling the row class */
+  .row {
+    display: flex; /* Use flexbox to align the columns horizontally */
+  }
+
+  
+  /* Styling the col-md-4 class (for smaller screens) */
+  .col-md-4 {
+    flex: 1; /* Each column takes an equal portion of the row */
+  }
+  
+  /* Styling the col-md-8 class (for smaller screens) */
+  .col-md-8 {
+    flex: 2; /* Each column takes twice the width of col-md-4 */
+  }
+  
+ 
+
+ 
+  .btn-enlarged {
+    width: 200px;
+    height: 50px;
+  }
+  

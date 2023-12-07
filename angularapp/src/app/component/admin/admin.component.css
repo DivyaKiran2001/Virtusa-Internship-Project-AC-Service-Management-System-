@@ -1,0 +1,87 @@
+a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+a:hover {
+    color: white;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 2.0rem;
+    margin-right: 8rem;
+
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+}
+
+.dropbtn {
+    font-size: 1.5rem;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    margin-left: -140px;
+    display: none;
+    position: absolute;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    color: gray;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+.dropdown-content img {
+        display: block;
+        margin: 100px auto;
+    border-radius: 50%;
+}
+
+input[type="password"],
+input[type="tel"],
+input[type="text"],
+input[type="email"] {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+h6,button[type="submit"]{
+    margin-left: 10px;
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    
+  }
+
+  

@@ -1,0 +1,28 @@
+
+input,textarea{
+  width: 90%;
+  margin-left: 5%;
+}
+label{
+  font-weight: bold;
+  margin-left: 5%;
+}
+small{
+  color: red;
+  margin-left: 5%;
+}
+button{
+  margin: 5%;
+  width: 90%;
+}
+body{
+  background-image: url('https://wallpaperaccess.com/full/7233921.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
